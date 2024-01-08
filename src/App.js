@@ -60,7 +60,7 @@ function App() {
           let copy = [...title];
           copy.sort();
           setTitle(copy);
-          console.log(title);
+          
         }}>가나다 순 정렬</button>
       <div className='list'>
         <h4>{title[0]} <span onClick={ ()=>{ setLikes(likes + 1)} }>😊</span>{likes}</h4>
@@ -77,9 +77,44 @@ function App() {
         <h4>{title[2]}</h4>
         <p4>2월 17일 발행</p4>
       </div>
+
+      <Modal></Modal>
+      {/* 모달 UI를 계속 만들기 불편함 --> HTML 덩어리를 Component 문법으로 처리 가능 */}
+      {/* 1. function 만들고 return()에 html 담기 */}
+      
+
+      
+
     </div>
   );
+}
 
+// 1. 반복적인 html 축약할 때
+// 2. 큰 페이지들
+// 3. 자주 변경되는 것들
+// --> 이럴 때 컴포넌트를 사용하면 좋다
+function Modal(){
+  return(
+    <div className='modal'>
+      <h4>제목</h4>
+      <p>날짜</p>
+      <p>상세 내용</p>
+    </div>
+    // 하나의 Div 같이 하나만 가능 두개 불가
+
+    // 굳이 div를 두개 하려면 다시 새로운 하나의 div로 감싸기
+    // 의미 없는 div를 쓰기 귀찮으면 <></> 로 할 수 있다. fragnent
+  );
+}
+
+function TestComponent(){
+  return(
+    <div>
+      <h4> 안녕하세요 ... </h4>
+      <span>Test...</span>
+      <p>Test P tag</p>
+    </div>
+  )
 }
 
 export default App;
