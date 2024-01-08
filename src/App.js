@@ -20,7 +20,7 @@ function App() {
   
   let [likes, setLikes] = useState(0);
 
-
+  let [modal, setModal] = useState(false); // true.. UI의 상태를 보관 형식은 자유
 
   function setFirstTitle(){
     // title[0] = '여자 코트 추천';
@@ -74,15 +74,28 @@ function App() {
 
       
       <div className='list'>
-        <h4>{title[2]}</h4>
+        <h4 onClick={ () => {
+          setModal(!modal)
+        }}>{title[2]}</h4>
         <p4>2월 17일 발행</p4>
       </div>
 
-      <Modal></Modal>
+      {/* <Modal></Modal>  */}
+      {/* state가 true면 보여주세요~ {}에는 if못씀 ㅠ 삼항연산자 써야함 */}
+
+      {
+        modal == true ? <Modal/> : null
+      }
+
       {/* 모달 UI를 계속 만들기 불편함 --> HTML 덩어리를 Component 문법으로 처리 가능 */}
       {/* 1. function 만들고 return()에 html 담기 */}
       
+      {/* 동적 UI만드는 3Step 
+      1. HTML CSS로 미리 디자인 완성
+      2. UI의 현재 상태랄 State로 저장
+      3. state에 따라 UI게 어떻게 보일지 작성*/}
 
+        
       
 
     </div>
