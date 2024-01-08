@@ -119,7 +119,7 @@ function App() {
       {/* state가 true면 보여주세요~ {}에는 if못씀 ㅠ 삼항연산자 써야함 */}
 
       {
-        modal == true ? <Modal/> : null
+        modal == true ? <Modal title={title} color={'yellow'} 글수정={setFirstTitle}/> : null
       }
 
       {/* 모달 UI를 계속 만들기 불편함 --> HTML 덩어리를 Component 문법으로 처리 가능 */}
@@ -138,12 +138,25 @@ function App() {
 // 2. 큰 페이지들
 // 3. 자주 변경되는 것들
 // --> 이럴 때 컴포넌트를 사용하면 좋다
-function Modal(){
+
+// state에 있는 값들을 가져와야 하는데 변수 scope 때문에 바로 갖다 쓰지 못한다.
+// props 문법을쓰면 된다
+// 각각의 컴포넌트의 포함관계를 따져가며 state를 전송해 줄 수 있다. 
+// 부모컴포넌트가 자식 컴포넌트에게는 가능
+// 1. 부모 -> 자식 state 전송법
+// 2. <자식 컴포넌트 새로운 작명={실제state이름}
+// 3. 자식 컴포넌트 만드는 곳에서 props로 파라미터 추가(보통 props)
+// 4. props.작명 으로 사용 (근데 보통 똑같이한다고..)
+// 자식-> 부모 불가, 옆집 불가
+// 구멍을 뚫어놔서 함수의 파라미터 처럼 가능 color 처럼..
+// 그냥 color="yellow" 처럼 일반 문자도 전송 가능
+function Modal(props){
   return(
-    <div className='modal'>
-      <h4>제목</h4>
+    <div className='modal' style={{background : props.color}}> 
+      <h4>{props.title[0]}</h4>
       <p>날짜</p>
       <p>상세 내용</p>
+      <button onClick={props.글수정}>글수정</button>
     </div>
     // 하나의 Div 같이 하나만 가능 두개 불가
 
