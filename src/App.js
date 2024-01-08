@@ -19,8 +19,18 @@ function App() {
   // 그냥 변수가 나음
   
   let [likes, setLikes] = useState(0);
+  let [ddabongs, setDdabongs] = useState([0, 0, 0])
 
   let [modal, setModal] = useState(false); // true.. UI의 상태를 보관 형식은 자유
+
+  // map 함수 사용법
+  // array 자료 갯수 만큼 함수안의 코드 실행 해줌 반복 실행
+  // 파라미터를 넣으면 array에 넣었던 자료 iterate 방식으로..
+  [1,2,3].map(function(a){
+    console.log(a);
+    return '1234' // return을 하면 array에 담아준다! // [1234, 1234, 1234]
+  })
+  // --> 좀 쉽게 반복문을 작성할 수 있다.
 
   function setFirstTitle(){
     // title[0] = '여자 코트 추천';
@@ -62,6 +72,8 @@ function App() {
           setTitle(copy);
           
         }}>가나다 순 정렬</button>
+
+      {/* 
       <div className='list'>
         <h4>{title[0]} <span onClick={ ()=>{ setLikes(likes + 1)} }>😊</span>{likes}</h4>
         <p4>2월 17일 발행</p4>
@@ -78,7 +90,30 @@ function App() {
           setModal(!modal)
         }}>{title[2]}</h4>
         <p4>2월 17일 발행</p4>
-      </div>
+      </div> 
+      */}
+
+      {/* { ... } 중괄호 안에서는 for 못쓰고 map 함수를 사용해야함 */}
+      {/* 파라미터도 받을 수 있음! 두번째 파라미터 i는 반복문 돌 때 마다 0에서 1씩 증가하는 수 */}
+      {
+        title.map(function(a, i){
+          return (
+            <div className='list' key={i}>
+            <h4 onClick={ () => {setModal(!modal)}}>{a} + {title[i]} 
+              <span onClick={() => {
+                let copy = [...ddabongs];
+                copy[i] = copy[i] + 1;
+                setDdabongs(copy);
+              }}>😁</span> {ddabongs[i]}
+            </h4>
+            <p4>2월 17일 발행</p4>
+          </div>
+          )
+          // [안녕, 안녕, 안녕].. 근데 리액트에서는 array 안에 html 담아놔도 잘 보여줌
+        })
+      }
+      {/* 글이 4개.. 몇개 있으면 하드코딩 X 
+      title state보면 배열임 이걸 이용해서 하면됨 */}
 
       {/* <Modal></Modal>  */}
       {/* state가 true면 보여주세요~ {}에는 if못씀 ㅠ 삼항연산자 써야함 */}
@@ -94,9 +129,6 @@ function App() {
       1. HTML CSS로 미리 디자인 완성
       2. UI의 현재 상태랄 State로 저장
       3. state에 따라 UI게 어떻게 보일지 작성*/}
-
-        
-      
 
     </div>
   );
