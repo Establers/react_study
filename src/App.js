@@ -34,7 +34,28 @@ function App() {
 
   let [title_idx, setTitle_idx] = useState(0); // 어떤 제목을 보여줄지
 
+  let [inputText, setInputText] = useState('');
+ 
+  function 글삭제버튼(idx){
+    let copy = [...title];
+    copy.splice(idx, 1);
+    setTitle(copy);
 
+    
+    let copy2 = [...ddabongs];
+    copy2.splice(idx, 1);
+    setDdabongs(copy2);
+  }
+
+  function 글등록버튼(t){
+    let copy = [...title];
+    copy.unshift(t);
+    setTitle(copy);
+
+    let copy2 = [...ddabongs];
+    copy2.unshift(0);
+    setDdabongs(copy2);
+  }
 
   function setFirstTitle(){
     // title[0] = '여자 코트 추천';
@@ -104,23 +125,45 @@ function App() {
           return (
             <div className='list' key={i}>
             <h4 onClick={() => {setModal(!modal); setTitle_idx(i);}}>{a}
-              <span onClick={() => {
+              <span onClick={(e) => {
+                e.stopPropagation();
                 let copy = [...ddabongs];
                 copy[i] = copy[i] + 1;
                 setDdabongs(copy);
               }}>😁</span> {ddabongs[i]}
             </h4>
             <p4>2월 17일 발행</p4>
+
+            <button onClick={()=>{ 글삭제버튼(i); }}>삭제</button>
           </div>
           )
           // [안녕, 안녕, 안녕].. 근데 리액트에서는 array 안에 html 담아놔도 잘 보여줌
         })
       }
+      {/* span 눌러도 모달창 뜨는 이유 : 클릭 이벤트는 상위Html로 퍼짐 : 이벤트 버블링 */}
+      {/* 막고싶으면 e.stoPropagation 이벤트 버블링 막는거. 상위 요소로 클릭이 진행되지 않ㅇ름 */}
+
       {/* 글이 4개.. 몇개 있으면 하드코딩 X 
       title state보면 배열임 이걸 이용해서 하면됨 */}
 
       {/* <Modal></Modal>  */}
       {/* state가 true면 보여주세요~ {}에는 if못씀 ㅠ 삼항연산자 써야함 */}
+
+      {/* input 에 type 태그들이 있다. 알아서 확인. type=.. 이랑 <select>등 */}
+      {/* input 에 뭔가 입력시 코드 실행하고 싶으면 onChange onInput */}
+      {/* onMouseOver, onScroll 여러가지 이벤트 핸들러가 있는데 필요할때 확인 30개 정도 */}
+      {/* (e) =>.. e 객체인데.e.target.value : 안에 적은 값 나옴 */}
+      <input onChange={(e)=>{
+        setInputText(e.target.value); // state 변경함수는 늦게 처리됨(비동기 처리)
+        console.log(inputText); // 
+      }}>    
+      </input>
+      {/* 저장하려면 state..나 변수 */}
+      
+      <button onClick={(e)=>{
+        글등록버튼(inputText);
+      }}>등록</button>
+
 
       {
         modal == true ? <Modal  title={title} title_idx={title_idx} 
@@ -159,7 +202,7 @@ function Modal(props){
   let [t, setT] = useState(0); // state를 자식에 만들면 부모->자식 전송할 필요 없을듯?
   // 여러 컴포넌트에 필요하면 가장 상위 컴포넌트에 넣으면 된다.
   // 귀찮으면 APP에 넣음됨..
-  
+
   return(
     <div className='modal' style={{background : props.color}}> 
       <h4>{props.title[props.title_idx]}</h4>
