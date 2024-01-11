@@ -32,6 +32,10 @@ function App() {
   })
   // --> 좀 쉽게 반복문을 작성할 수 있다.
 
+  let [title_idx, setTitle_idx] = useState(0); // 어떤 제목을 보여줄지
+
+
+
   function setFirstTitle(){
     // title[0] = '여자 코트 추천';
     // setTitle(title);
@@ -99,7 +103,7 @@ function App() {
         title.map(function(a, i){
           return (
             <div className='list' key={i}>
-            <h4 onClick={ () => {setModal(!modal)}}>{a} + {title[i]} 
+            <h4 onClick={() => {setModal(!modal); setTitle_idx(i);}}>{a}
               <span onClick={() => {
                 let copy = [...ddabongs];
                 copy[i] = copy[i] + 1;
@@ -119,7 +123,8 @@ function App() {
       {/* state가 true면 보여주세요~ {}에는 if못씀 ㅠ 삼항연산자 써야함 */}
 
       {
-        modal == true ? <Modal title={title} color={'yellow'} 글수정={setFirstTitle}/> : null
+        modal == true ? <Modal  title={title} title_idx={title_idx} 
+                                color={'yellow'} 글수정={setFirstTitle}/> : null
       }
 
       {/* 모달 UI를 계속 만들기 불편함 --> HTML 덩어리를 Component 문법으로 처리 가능 */}
@@ -153,7 +158,7 @@ function App() {
 function Modal(props){
   return(
     <div className='modal' style={{background : props.color}}> 
-      <h4>{props.title[0]}</h4>
+      <h4>{props.title[props.title_idx]}</h4>
       <p>날짜</p>
       <p>상세 내용</p>
       <button onClick={props.글수정}>글수정</button>
