@@ -156,6 +156,10 @@ function App() {
 // 구멍을 뚫어놔서 함수의 파라미터 처럼 가능 color 처럼..
 // 그냥 color="yellow" 처럼 일반 문자도 전송 가능
 function Modal(props){
+  let [t, setT] = useState(0); // state를 자식에 만들면 부모->자식 전송할 필요 없을듯?
+  // 여러 컴포넌트에 필요하면 가장 상위 컴포넌트에 넣으면 된다.
+  // 귀찮으면 APP에 넣음됨..
+  
   return(
     <div className='modal' style={{background : props.color}}> 
       <h4>{props.title[props.title_idx]}</h4>
